@@ -1,29 +1,48 @@
-#!/bin/bash
-
-FMOD_ROOT_NAME="fmodstudioapi"
-FMOD_VERSION="11002"
-FMOD_VERSION_PRETTY="1.10.02"
+#!/usr/bin/env bash
 
 cd "$(dirname "$0")"
 
-# turn on verbose debugging output for parabuild logs.
-set -x
+# turn on verbose debugging output for logs.
+exec 4>&1; export BASH_XTRACEFD=4; set -x
 # make errors fatal
 set -e
+# bleat on references to undefined shell variables
+set -u
 
-# Check autobuild is around or fail
-if [ -z "$AUTOBUILD" ] ; then
-    fail
-fi
+FMOD_ROOT_NAME="fmodstudioapi"
+FMOD_VERSION="11010"
+FMOD_VERSION_PRETTY="1.10.10"
 
-if [ "$OSTYPE" = "cygwin" ] ; then
-    export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
-fi
+top="$(pwd)"
+stage="$top"/stage
+stage_release="$stage/lib/release"
+stage_debug="$stage/lib/debug"
 
-# Load autobuild provided shell functions and variables
-set +x
-eval "$("$AUTOBUILD" source_environment)"
-set -x
+# load autobuild provided shell functions and variables
+case "$AUTOBUILD_PLATFORM" in
+    windows*)
+        autobuild="$(cygpath -u "$AUTOBUILD")"
+    ;;
+    *)
+        autobuild="$AUTOBUILD"
+    ;;
+esac
+source_environment_tempfile="$stage/source_environment.sh"
+"$autobuild" source_environment > "$source_environment_tempfile"
+. "$source_environment_tempfile"
+
+build=${AUTOBUILD_BUILD_ID:=0}
+echo "${FMOD_VERSION_PRETTY}.${build}" > "${stage}/VERSION.txt"
+
+# Create the staging license folder
+mkdir -p "$stage/LICENSES"
+
+# Create the staging include folders
+mkdir -p "$stage/include/fmodstudio"
+
+#Create the staging debug and release folders
+mkdir -p "$stage_debug"
+mkdir -p "$stage_release"
 
 # Form the official fmod archive URL to fetch
 # Note: fmod is provided in 3 flavors (one per platform) of precompiled binaries. We do not have access to source code.
@@ -78,21 +97,6 @@ case "$FMOD_ARCHIVE" in
     ;;
 esac
 
-stage="$(pwd)/stage"
-stage_release="$stage/lib/release"
-stage_debug="$stage/lib/debug"
-
-# Create the staging license folder
-mkdir -p "$stage/LICENSES"
-
-# Create the staging include folders
-mkdir -p "$stage/include/fmodstudio"
-
-#Create the staging debug and release folders
-mkdir -p "$stage_debug"
-mkdir -p "$stage_release"
-
-echo "${FMOD_VERSION_PRETTY}" > "${stage}/VERSION.txt"
 COPYFLAGS=""
 pushd "$FMOD_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
@@ -139,5 +143,3 @@ pushd "$FMOD_SOURCE_DIR"
     # Copy License (extracted from the readme)
     cp "doc/LICENSE.TXT" "$stage/LICENSES/fmodstudio.txt"
 popd
-pass
-
