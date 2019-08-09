@@ -51,7 +51,7 @@ case "$AUTOBUILD_PLATFORM" in
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
     ;;
-    "darwin")
+    darwin*)
     FMOD_PLATFORM="mac-installer"
     FMOD_FILEEXTENSION=".dmg"
     ;;
@@ -114,9 +114,9 @@ pushd "$FMOD_SOURCE_DIR"
             cp $COPYFLAGS "api/core/lib/x64/fmodL.dll" "$stage_debug"
             cp $COPYFLAGS "api/core/lib/x64/fmod.dll" "$stage_release"
         ;;
-        "darwin")
-            cp "api/lowlevel/lib/libfmodL.dylib" "$stage_debug"
-            cp "api/lowlevel/lib/libfmod.dylib" "$stage_release"
+        darwin*)
+            cp "api/core/lib/libfmodL.dylib" "$stage_debug"
+            cp "api/core/lib/libfmod.dylib" "$stage_release"
             pushd "$stage_debug"
               fix_dylib_id libfmodL.dylib
             popd
