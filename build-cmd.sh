@@ -10,8 +10,8 @@ set -e
 set -u
 
 FMOD_ROOT_NAME="fmodstudioapi"
-FMOD_VERSION="11010"
-FMOD_VERSION_PRETTY="1.10.10"
+FMOD_VERSION="20003"
+FMOD_VERSION_PRETTY="2.00.03"
 
 top="$(pwd)"
 stage="$top"/stage
@@ -102,17 +102,17 @@ pushd "$FMOD_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
 	    COPYFLAGS="-dR --preserve=mode,timestamps"
-            cp $COPYFLAGS "api/lowlevel/lib/fmodL_vc.lib" "$stage_debug"
-            cp $COPYFLAGS "api/lowlevel/lib/fmod_vc.lib" "$stage_release"
-            cp $COPYFLAGS "api/lowlevel/lib/fmodL.dll" "$stage_debug"
-            cp $COPYFLAGS "api/lowlevel/lib/fmod.dll" "$stage_release"
+            cp $COPYFLAGS "api/core/lib/x86/fmodL_vc.lib" "$stage_debug"
+            cp $COPYFLAGS "api/core/lib/x86/fmod_vc.lib" "$stage_release"
+            cp $COPYFLAGS "api/core/lib/x86/fmodL.dll" "$stage_debug"
+            cp $COPYFLAGS "api/core/lib/x86/fmod.dll" "$stage_release"
         ;;
         "windows64")
 	    COPYFLAGS="-dR --preserve=mode,timestamps"
-            cp $COPYFLAGS "api/lowlevel/lib/fmodL64_vc.lib" "$stage_debug"
-            cp $COPYFLAGS "api/lowlevel/lib/fmod64_vc.lib" "$stage_release"
-            cp $COPYFLAGS "api/lowlevel/lib/fmodL64.dll" "$stage_debug"
-            cp $COPYFLAGS "api/lowlevel/lib/fmod64.dll" "$stage_release"
+            cp $COPYFLAGS "api/core/lib/x64/fmodL_vc.lib" "$stage_debug"
+            cp $COPYFLAGS "api/core/lib/x64/fmod_vc.lib" "$stage_release"
+            cp $COPYFLAGS "api/core/lib/x64/fmodL.dll" "$stage_debug"
+            cp $COPYFLAGS "api/core/lib/x64/fmod.dll" "$stage_release"
         ;;
         "darwin")
             cp "api/lowlevel/lib/libfmodL.dylib" "$stage_debug"
@@ -137,8 +137,8 @@ pushd "$FMOD_SOURCE_DIR"
     esac
 
     # Copy the headers
-    cp $COPYFLAGS api/lowlevel/inc/*.h "$stage/include/fmodstudio"
-    cp $COPYFLAGS api/lowlevel/inc/*.hpp "$stage/include/fmodstudio"
+    cp $COPYFLAGS api/core/inc/*.h "$stage/include/fmodstudio"
+    cp $COPYFLAGS api/core/inc/*.hpp "$stage/include/fmodstudio"
 
     # Copy License (extracted from the readme)
     cp "doc/LICENSE.TXT" "$stage/LICENSES/fmodstudio.txt"
