@@ -10,8 +10,8 @@ set -e
 set -u
 
 FMOD_ROOT_NAME="fmodstudioapi"
-FMOD_VERSION="20003"
-FMOD_VERSION_PRETTY="2.00.03"
+FMOD_VERSION="20006"
+FMOD_VERSION_PRETTY="2.00.06"
 
 top="$(pwd)"
 stage="$top"/stage
@@ -87,7 +87,7 @@ case "$FMOD_ARCHIVE" in
         fi
     ;;
     *.tar.gz)
-        extract "$FMOD_ARCHIVE"
+        tar xvf "$FMOD_ARCHIVE"
     ;;
     *.dmg)
         hdid "$FMOD_ARCHIVE"
@@ -126,13 +126,13 @@ pushd "$FMOD_SOURCE_DIR"
         ;;
         "linux")
             # Copy the relevant stuff around
-            cp -a api/lowlevel/lib/x86/libfmodL.so* "$stage_debug"
-            cp -a api/lowlevel/lib/x86/libfmod.so* "$stage_release"
+            cp -a api/core/lib/x86/libfmodL.so* "$stage_debug"
+            cp -a api/core/lib/x86/libfmod.so* "$stage_release"
          ;;
         "linux64")
             # Copy the relevant stuff around
-            cp -a api/lowlevel/lib/x86_64/libfmodL.so* "$stage_debug"
-            cp -a api/lowlevel/lib/x86_64/libfmod.so* "$stage_release"
+            cp -a api/core/lib/x86_64/libfmodL.so* "$stage_debug"
+            cp -a api/core/lib/x86_64/libfmod.so* "$stage_release"
         ;;
     esac
 
