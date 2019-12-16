@@ -1,0 +1,3 @@
+[submodule "fmodstudio"]
+	path = fmodstudio
+	url = ../thirdparty/private-libraries/fmodstudio.git
