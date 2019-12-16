@@ -65,6 +65,7 @@ FMOD_ARCHIVE="$FMOD_SOURCE_DIR$FMOD_FILEEXTENSION"
 
 case "$FMOD_ARCHIVE" in
     *.exe)
+        cp -a fmodstudio/$FMOD_ARCHIVE .
         # We can't run the NSIS installer as admin in TC
         # so we do this part manually and put the whole lot
         # into the repo instead.
@@ -87,9 +88,11 @@ case "$FMOD_ARCHIVE" in
         fi
     ;;
     *.tar.gz)
+        cp -a fmodstudio/$FMOD_ARCHIVE .
         tar xvf "$FMOD_ARCHIVE"
     ;;
     *.dmg)
+        cp -a fmodstudio/$FMOD_ARCHIVE .
         hdid "$FMOD_ARCHIVE"
         mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
         cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
