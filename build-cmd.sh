@@ -10,8 +10,8 @@ set -e
 set -u
 
 FMOD_ROOT_NAME="fmodstudioapi"
-FMOD_VERSION="20006"
-FMOD_VERSION_PRETTY="2.00.06"
+FMOD_VERSION="20007"
+FMOD_VERSION_PRETTY="2.00.07"
 
 top="$(pwd)"
 stage="$top"/stage
