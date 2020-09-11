@@ -5,7 +5,7 @@ stages:
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   AUTOBUILD_PACKAGE_NAME: fmodstudio
-  AUTOBUILD_BUILD_ID: $CI_PIPELINE_IID
+  AUTOBUILD_BUILD_ID: $CI_PIPELINE_ID
 
 build:windows:
   stage: build
