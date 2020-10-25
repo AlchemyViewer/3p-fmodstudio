@@ -1,9 +1,6 @@
 include:
   - project: 'alchemy/infrastructure/gitlab-ci-config'
-    file: '3p-library-build.yml'
+    file: '3p-library.yml'
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  AUTOBUILD_PACKAGE_NAME: fmodstudio
-  AUTOBUILD_PACKAGE_BASE_DIR: autobuild-internal
-  AUTOBUILD_PACKAGE_DIR: fmodstudio

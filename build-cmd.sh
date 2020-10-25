@@ -31,8 +31,7 @@ source_environment_tempfile="$stage/source_environment.sh"
 "$autobuild" source_environment > "$source_environment_tempfile"
 . "$source_environment_tempfile"
 
-build=${AUTOBUILD_BUILD_ID:=0}
-echo "${FMOD_VERSION_PRETTY}.${build}" > "${stage}/VERSION.txt"
+echo "${FMOD_VERSION_PRETTY}" > "${stage}/VERSION.txt"
 
 # Create the staging license folder
 mkdir -p "$stage/LICENSES"
