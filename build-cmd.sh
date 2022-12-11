@@ -120,10 +120,10 @@ pushd "$FMOD_SOURCE_DIR"
             cp "api/core/lib/libfmodL.dylib" "$stage_debug"
             cp "api/core/lib/libfmod.dylib" "$stage_release"
             pushd "$stage_debug"
-              fix_dylib_id libfmodL.dylib
+              install_name_tool -id "@rpath/libfmodL.dylib" "libfmodL.dylib"
             popd
             pushd "$stage_release"
-              fix_dylib_id libfmod.dylib
+              install_name_tool -id "@rpath/libfmod.dylib" "libfmod.dylib"
             popd
         ;;
         "linux")
