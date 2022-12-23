@@ -115,7 +115,7 @@ pushd "$FMOD_SOURCE_DIR"
             cp $COPYFLAGS "api/core/lib/x64/fmod_vc.lib" "$stage_release"
             cp $COPYFLAGS "api/core/lib/x64/fmodL.dll" "$stage_debug"
             cp $COPYFLAGS "api/core/lib/x64/fmod.dll" "$stage_release"
-        ;;
+        ;; 
         darwin*)
             cp "api/core/lib/libfmodL.dylib" "$stage_debug"
             cp "api/core/lib/libfmod.dylib" "$stage_release"
@@ -125,6 +125,20 @@ pushd "$FMOD_SOURCE_DIR"
             pushd "$stage_release"
               install_name_tool -id "@rpath/libfmod.dylib" "libfmod.dylib"
             popd
+
+            if [ -n "${APPLE_SIGNATURE:=""}" -a -n "${APPLE_KEY:=""}" -a -n "${APPLE_KEYCHAIN:=""}" ]; then
+                KEYCHAIN_PATH="$HOME/Library/Keychains/$APPLE_KEYCHAIN"
+                security unlock-keychain -p $APPLE_KEY $KEYCHAIN_PATH
+                for dylib in $stage/lib/*/libfmod*.dylib;
+                do
+                    if [ -f "$dylib" ]; then
+                        codesign --keychain $KEYCHAIN_PATH --force --timestamp --sign "$APPLE_SIGNATURE" "$dylib" || true
+                    fi
+                done
+                security lock-keychain $KEYCHAIN_PATH
+            else
+                echo "Code signing not configured; skipping codesign."
+            fi
         ;;
         "linux")
             # Copy the relevant stuff around
