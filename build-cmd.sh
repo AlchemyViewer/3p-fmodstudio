@@ -10,7 +10,7 @@ set -e
 set -u
 
 FMOD_ROOT_NAME="fmodstudioapi"
-FMOD_VERSION="20211"
+FMOD_VERSION="20212"
 FMOD_VERSION_PRETTY="2.02.12"
 
 top="$(pwd)"
