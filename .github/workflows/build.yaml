@@ -14,6 +14,7 @@ jobs:
           addrsize: ${{ matrix.addrsize }}
           build-variables-repo: alchemyviewer/build-variables
           build-variables-ref: alchemy
+          deploy-key: ${{ secrets.FMODSTUDIO_DEPLOY_KEY }}
   release:
     needs: build
     runs-on: [ubuntu-latest]
