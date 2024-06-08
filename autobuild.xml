@@ -3,6 +3,8 @@
 <map>
     <key>package_description</key>
     <map>
+      <key>canonical_repo</key>
+      <string>https://github.com/AlchemyViewer/3p-fmodstudio</string>
       <key>copyright</key>
       <string>FMOD Studio, Copyright (c) Firelight Technologies Pty Ltd.</string>
       <key>description</key>
